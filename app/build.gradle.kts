@@ -75,6 +75,12 @@ dependencies {
     implementation(libs.navigation)
 
     testImplementation(libs.junit)
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockitoInline)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.junit.test)
+    testImplementation(libs.coroutinesTest)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
