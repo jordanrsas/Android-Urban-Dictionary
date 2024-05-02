@@ -1,6 +1,12 @@
 package com.cjra.urbandictionary.framework.di
 
+import com.cjra.urbandictionary.application.data.remote.DictionaryDataSourceRemote
+import com.cjra.urbandictionary.application.data.remote.DictionarySourceRemote
+import com.cjra.urbandictionary.application.presentation.HomeStateMapper
+import com.cjra.urbandictionary.application.presentation.usecases.DefineWord
+import com.cjra.urbandictionary.application.presentation.usecases.DefineWordSource
 import com.cjra.urbandictionary.framework.remote.DictionaryApi
+import com.cjra.urbandictionary.framework.remote.DictionaryRemoteDataGateway
 import com.cjra.urbandictionary.framework.remote.DictionaryService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,6 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val homeModule = module {
+    single { DefineWord(get()) }
+    single { HomeStateMapper() }
+
+    single<DefineWordSource> { DictionarySourceRemote(get()) }
+    single<DictionaryDataSourceRemote> { DictionaryRemoteDataGateway(get()) }
+
     single { DictionaryService(get()) }
 
     single { provideLoggingInterceptor() }

@@ -1,27 +1,33 @@
 package com.cjra.urbandictionary.home.common
 
 import com.cjra.urbandictionary.application.data.remote.DictionaryDataSourceRemote
-import com.cjra.urbandictionary.framework.di.provideDictionaryApi
-import com.cjra.urbandictionary.framework.di.provideLoggingInterceptor
-import com.cjra.urbandictionary.framework.di.provideRetrofit
+import com.cjra.urbandictionary.application.data.remote.DictionarySourceRemote
+import com.cjra.urbandictionary.application.presentation.HomeStateMapper
+import com.cjra.urbandictionary.application.presentation.usecases.DefineWord
+import com.cjra.urbandictionary.application.presentation.usecases.DefineWordSource
+import com.cjra.urbandictionary.framework.remote.ApiResponse
 import com.cjra.urbandictionary.framework.remote.DictionaryApi
 import com.cjra.urbandictionary.framework.remote.DictionaryRemoteDataGateway
 import com.cjra.urbandictionary.framework.remote.DictionaryService
+import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import org.koin.dsl.module
 
 val homeModuleHappy = module {
-    single { DictionaryService(get()) }
+    single { DefineWord(get()) }
+    single { HomeStateMapper() }
 
+    single<DefineWordSource> { DictionarySourceRemote(get()) }
+
+    single { DictionaryService(get()) }
     single<DictionaryDataSourceRemote> { DictionaryRemoteDataGateway(get()) }
 
-    single { DictionaryService(get()) }
-    single { provideLoggingInterceptor() }
-    single { provideDictionaryApi(get()) }
-    single { provideRetrofit(get()) }
-    single { provideArticlesApi() }
+    //single { provideLoggingInterceptor() }
+    //single { provideDictionaryApi(get()) }
+    //single { provideRetrofit(get()) }
+    single { provideDictionaryApi() }
 }
 
-fun provideArticlesApi(): DictionaryApi = mock {
-    onBlocking { defineWord("word") }
+fun provideDictionaryApi(): DictionaryApi = mock {
+    onBlocking { defineWord("word") } doReturn ApiResponse(definitionsResultRaw)
 }

@@ -1,5 +1,6 @@
 package com.cjra.urbandictionary.home.common
 
+import com.cjra.urbandictionary.application.presentation.Definition
 import com.cjra.urbandictionary.application.presentation.plain.DefinitionPlain
 import com.cjra.urbandictionary.framework.remote.DefinitionRaw
 
@@ -58,6 +59,30 @@ val definitionsPlain: List<DefinitionPlain> = listOf(
         dislikes = 7
     ),
     DefinitionPlain(
+        definition = "To dispense information, as coined by [Harvard] [Professor] [Shoshana] Zuboff.",
+        likes = 45,
+        word = "informate",
+        example = "\"they'd rather [speculate] before they informate...\" song: [misunderstood] lyrics by [lil wayne]",
+        dislikes = 5
+    )
+)
+
+val definitions: List<Definition> = listOf(
+    Definition(
+        definition = "A new term thats [spreading] across the US like [wildfire].\r\n[Information] means marijuana, and to be informed means to be high.",
+        likes = 170,
+        word = "information",
+        example = "guy 1: \"[Yo dude], wanna [buy] some information?\"\r\nguy 2: \"[No thanks] man, Im already informed\"",
+        dislikes = 85
+    ),
+    Definition(
+        definition = "[Something] that an [average American] [needs more] of.",
+        likes = 16,
+        word = "information",
+        example = "This [American] is uninformed because they are to [lazy] to [read] the information.",
+        dislikes = 7
+    ),
+    Definition(
         definition = "To dispense information, as coined by [Harvard] [Professor] [Shoshana] Zuboff.",
         likes = 45,
         word = "informate",
