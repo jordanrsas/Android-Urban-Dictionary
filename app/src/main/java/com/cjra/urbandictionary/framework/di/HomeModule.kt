@@ -3,6 +3,7 @@ package com.cjra.urbandictionary.framework.di
 import com.cjra.urbandictionary.application.data.remote.DictionaryDataSourceRemote
 import com.cjra.urbandictionary.application.data.remote.DictionarySourceRemote
 import com.cjra.urbandictionary.application.presentation.HomeStateMapper
+import com.cjra.urbandictionary.application.presentation.HomeViewModel
 import com.cjra.urbandictionary.application.presentation.usecases.DefineWord
 import com.cjra.urbandictionary.application.presentation.usecases.DefineWordSource
 import com.cjra.urbandictionary.framework.remote.DictionaryApi
@@ -10,6 +11,7 @@ import com.cjra.urbandictionary.framework.remote.DictionaryRemoteDataGateway
 import com.cjra.urbandictionary.framework.remote.DictionaryService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,6 +23,8 @@ val homeModule = module {
 
     single<DefineWordSource> { DictionarySourceRemote(get()) }
     single<DictionaryDataSourceRemote> { DictionaryRemoteDataGateway(get()) }
+
+    viewModel { HomeViewModel(get(), get()) }
 
     single { DictionaryService(get()) }
 

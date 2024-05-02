@@ -1,6 +1,7 @@
 package com.cjra.urbandictionary.home.common
 
 import com.cjra.urbandictionary.application.presentation.Definition
+import com.cjra.urbandictionary.application.presentation.HomeState
 import com.cjra.urbandictionary.application.presentation.plain.DefinitionPlain
 import com.cjra.urbandictionary.framework.remote.DefinitionRaw
 
@@ -90,3 +91,5 @@ val definitions: List<Definition> = listOf(
         dislikes = 5
     )
 )
+
+val successfulState = HomeState.Success(definitions)
