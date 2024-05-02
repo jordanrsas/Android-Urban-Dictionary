@@ -1,9 +1,13 @@
 package com.cjra.urbandictionary.framework.di
 
+import android.content.Context
+import androidx.room.Room
+import com.cjra.urbandictionary.framework.local.DictionaryDataBase
 import com.cjra.urbandictionary.framework.remote.DictionaryApi
 import com.cjra.urbandictionary.framework.remote.DictionaryService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,6 +20,17 @@ val homeModule = module {
     single { provideHttpClient(get()) }
     single { provideDictionaryApi(get()) }
     single { provideRetrofit(get()) }
+
+    single { provideDictionaryDatabase(androidApplication()) }
+    single { get<DictionaryDataBase>().dao }
+}
+
+fun provideDictionaryDatabase(context: Context): DictionaryDataBase {
+    return Room.databaseBuilder(
+        context.applicationContext,
+        DictionaryDataBase::class.java,
+        "dictionary_db"
+    ).build()
 }
 
 fun provideLoggingInterceptor(): HttpLoggingInterceptor {
