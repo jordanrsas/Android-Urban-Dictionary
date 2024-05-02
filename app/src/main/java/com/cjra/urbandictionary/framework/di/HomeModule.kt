@@ -1,11 +1,17 @@
 package com.cjra.urbandictionary.framework.di
 
+import android.app.Application
+import androidx.room.Room
+import com.cjra.urbandictionary.application.data.local.DictionaryDataSourceLocal
 import com.cjra.urbandictionary.application.data.remote.DictionaryDataSourceRemote
-import com.cjra.urbandictionary.application.data.remote.DictionarySourceRemote
+import com.cjra.urbandictionary.application.data.repository.DictionarySourceRepository
 import com.cjra.urbandictionary.application.presentation.HomeStateMapper
 import com.cjra.urbandictionary.application.presentation.HomeViewModel
 import com.cjra.urbandictionary.application.presentation.usecases.DefineWord
-import com.cjra.urbandictionary.application.presentation.usecases.DefineWordSource
+import com.cjra.urbandictionary.application.presentation.usecases.DictionarySource
+import com.cjra.urbandictionary.framework.local.DictionaryDatabase
+import com.cjra.urbandictionary.framework.local.DictionaryLocalDataGateway
+import com.cjra.urbandictionary.framework.local.WordDefinitionDao
 import com.cjra.urbandictionary.framework.remote.DictionaryApi
 import com.cjra.urbandictionary.framework.remote.DictionaryRemoteDataGateway
 import com.cjra.urbandictionary.framework.remote.DictionaryService
@@ -21,8 +27,9 @@ val homeModule = module {
     single { DefineWord(get()) }
     single { HomeStateMapper() }
 
-    single<DefineWordSource> { DictionarySourceRemote(get()) }
+    single<DictionarySource> { DictionarySourceRepository(get(), get()) }
     single<DictionaryDataSourceRemote> { DictionaryRemoteDataGateway(get()) }
+    single<DictionaryDataSourceLocal> { DictionaryLocalDataGateway(get()) }
 
     viewModel { HomeViewModel(get(), get()) }
 
@@ -32,7 +39,19 @@ val homeModule = module {
     single { provideHttpClient(get()) }
     single { provideDictionaryApi(get()) }
     single { provideRetrofit(get()) }
+    single { provideDataBase(get()) }
+    single { provideDao(get()) }
 }
+
+fun provideDataBase(application: Application): DictionaryDatabase =
+    Room.databaseBuilder(
+        application,
+        DictionaryDatabase::class.java,
+        "table_definitions"
+    ).fallbackToDestructiveMigration().build()
+
+fun provideDao(dictionaryDatabase: DictionaryDatabase): WordDefinitionDao =
+    dictionaryDatabase.getDictionaryDao()
 
 fun provideLoggingInterceptor(): HttpLoggingInterceptor {
     val interceptor = HttpLoggingInterceptor()

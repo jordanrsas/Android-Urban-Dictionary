@@ -178,9 +178,9 @@ fun DictionaryView(definitions: List<Definition>) {
             Text(if (sortAscending) "Sort by Likes Ascending" else "Sort by Likes Descending")
         }
 
-        // Mostrar las definiciones en una lista lazy
+        // Show definitions on LazyList
         LazyColumn {
-            itemsIndexed(sortedDefinitions) { index, definition ->
+            itemsIndexed(sortedDefinitions) { _, definition ->
                 DefinitionItem(definition = definition)
             }
         }

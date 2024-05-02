@@ -1,6 +1,6 @@
 package com.cjra.urbandictionary.home
 
-import com.cjra.urbandictionary.application.presentation.usecases.DefineWordSource
+import com.cjra.urbandictionary.application.presentation.usecases.DictionarySource
 import com.cjra.urbandictionary.home.common.BaseUnitTestHome
 import com.cjra.urbandictionary.home.common.definitionsPlain
 import kotlinx.coroutines.flow.single
@@ -8,10 +8,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.koin.test.inject
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
-class DefineWordSourceRemoteShould : BaseUnitTestHome() {
-    private val sut by inject<DefineWordSource>()
+class DictionarySourceRemoteShould : BaseUnitTestHome() {
+    private val sut by inject<DictionarySource>()
 
     @Test
     fun defineWordData() = runTest {

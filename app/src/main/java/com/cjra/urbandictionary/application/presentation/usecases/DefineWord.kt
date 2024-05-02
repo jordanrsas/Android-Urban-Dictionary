@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
-class DefineWord constructor(private val source: DefineWordSource) {
+class DefineWord(private val source: DictionarySource) {
     suspend operator fun invoke(word: String): Flow<Result<List<DefinitionPlain>>> =
         source.defineWord(word).map {
             Result.success(it)
